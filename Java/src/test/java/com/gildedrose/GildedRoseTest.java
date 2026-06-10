@@ -98,4 +98,44 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(5, items[0].sellIn);
     }
+
+    @Test
+    void backstage_pass_quality_increases_by_one_when_more_than_10_days() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(21, items[0].quality);
+    }
+
+    @Test
+    void backstage_pass_quality_increases_by_two_when_10_days_or_less() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(22, items[0].quality);
+    }
+
+    @Test
+    void backstage_pass_quality_increases_by_three_when_5_days_or_less() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(23, items[0].quality);
+    }
+
+    @Test
+    void backstage_pass_quality_drops_to_zero_after_concert() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(0, items[0].quality);
+    }
+
+    @Test
+    void backstage_pass_quality_never_exceeds_50() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(50, items[0].quality);
+    }
 }
