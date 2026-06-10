@@ -59,4 +59,28 @@ class GildedRoseTest {
         assertEquals(7, items[0].quality);
     }
 
+    @Test
+    void aged_brie_increases_in_quality() {
+        Item[] items = new Item[] { new Item("Aged Brie", 5, 10) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(11, items[0].quality);
+    }
+
+    @Test
+    void aged_brie_quality_never_exceeds_50() {
+        Item[] items = new Item[] { new Item("Aged Brie", 5, 50) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(50, items[0].quality);
+    }
+
+    @Test
+    void aged_brie_increases_twice_as_fast_after_sell_date() {
+        Item[] items = new Item[] { new Item("Aged Brie", 0, 10) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(12, items[0].quality);
+    }
+
 }
